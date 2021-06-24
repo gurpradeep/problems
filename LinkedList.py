@@ -17,7 +17,7 @@ class LinkedList:
     def is_empty(self):
         if self.head_node is None:
             return True
-        else
+        else:
             return False
 
     def insert_at_head(self,data):
