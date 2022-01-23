@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Airline Reservations Management API
+  description: |
+    API for Airline Management System
+  version: 1.0.1
+servers:
+  - url: http://api.example.com/v1
+    description: Production Server
+paths:
+  /reservations/{reservation_id}:
+    put:
+      # @see https://swagger.io/docs/specification/describing-parameters
+      summary: Book or re-book a reservation
+      description: |
+        Example request:
+        ```
+          PUT http://api.example.com/v1/reservations/d2783fc5-0fee
+        ```
+      parameters:
+        - name: reservation_id
+          in: path
+          required: true
+          description: Unique identifier of the reservation being created or
+                       changed
+          schema:
+            type : string
+          example: d2783fc5-0fee
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outbound:
+                  type: object
+                  properties:
+                    flight_num:
+                      type: string
+                      example: "AA 253"
+                    flight_date:
+                      type: string
+                      openapi: 3.0.0
+info:
+  title: Airline Reservations Management API
+  description: |
+    API for Airline Management System
+  version: 1.0.1
+servers:
+  - url: http://api.example.com/v1
+    description: Production Server
+paths:
+  /reservations/{reservation_id}:
+    put:
+      # @see https://swagger.io/docs/specification/describing-parameters
+      summary: Book or re-book a reservation
+      description: |
+        Example request:
+        ```
+          PUT http://api.example.com/v1/reservations/d2783fc5-0fee
+        ```
+      parameters:
+        - name: reservation_id
+          in: path
+          required: true
+          description: Unique identifier of the reservation being created or
+                       changed
+          schema:
+            type : string
+          example: d2783fc5-0fee
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outbound:
+                  type: object
+                  properties:
+                    flight_num:
+                      type: string
+                      example: "AA 253"
+                    flight_date:
+                      type: string
+
+ 

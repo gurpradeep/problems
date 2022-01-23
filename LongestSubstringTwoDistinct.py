@@ -1,0 +1,63 @@
+from collections import defaultdict
+
+def lengthOfLongestSubstringTwoDistinct(s: str) -> int:
+    strLen = len(s)
+
+    if strLen < 3:
+        return strLen
+    
+    maxLen=0
+    left = 0
+    right=0
+    map = defaultdict()
+
+    while right < strLen:
+        map[s[right]]=right
+        if len(map)==3:
+            del_idx= min(map.values())
+            map.pop(s[del_idx])
+            left = del_idx+1
+        
+        maxLen = max(right-left+1,maxLen)
+        right+=1
+    return maxLen
+
+
+
+
+
+
+def lengthOfLongestSubstringTwoDistinct2(s: str) -> int:
+    strLen = len(s)
+    maxLen=0
+
+    if strLen<2:
+        return maxLen
+
+    for i in range(strLen):
+        for j in range(i+1,strLen):
+            if (j-i) >= maxLen:
+                valid = validateStr(s,i,j)
+                if valid == True:
+                    tempLen = j-i+1
+                    maxLen=max(tempLen,maxLen)
+    return maxLen
+
+def validateStr2(s,start,end):
+    validSet = set()
+    valid = False
+    for idx in range(start,end+1):
+        validSet.add(s[idx])
+        lenSet = len(validSet)
+        if lenSet>2:
+            valid=False
+            break
+        else :
+            valid=True
+            continue
+        
+    return valid
+
+
+print(lengthOfLongestSubstringTwoDistinct("ccaabbb"))
+print(lengthOfLongestSubstringTwoDistinct("BabBbBbBbbABBABBbAabbbABBaBbBabaabBbbBAAaaAbbAABaAbBBaAaaaaBABbaBbAAbBBbbABBaaBBbabAbBBAAbAbaaaBrBBaAaabAbbBbABabABaBabBBBBBaAbAaABaaaAAaAgAaAaBAbaBaBaBbbbBbABBBBaaaBbbbAbbbBaBBaAbBBbbaaaaaBbbaaAAbAABBABBaAAABBbbBbBbbBbaABBAAbBAbabbbabwBbbBArABaBBbabBaBabABABaabBBABBAabBAAaabbbbBAababAaBaaAaBbBbBAAbaBabBbabaBaaBbaabABAbbBbaBAbabABbbaAaBbAAAbBbaabBBAbbbABbaabAAAaaaBaBaaaBBABbBAbAAbaABaabbbbBBAabbbBABBbaABBAAAabaAbaBAbbaBaBbAbaAAbBaBAbAabBBbBsBabbbAaBbabAAaABAaBAAAbbaBaAbABABBBAbABABbbbBaaBaBAbABAbaaAbBbAABBbAbbAaBbabaBbABAAbAABbbAabAaAaBbBBbAAbBbaaaBAbABBbBBaCabBBabBAaBbBaAbbBAbbBaBAabBAababAaAbaAaabBBBABabaabBAAAabBAAAbBAbAaaaAbAaBaAbbAaABABBbBBAABAabaAAbBaBbAAaabbABBBABaBAabAbAAbBbAabAbaBbAbBAABAABAAAbBaaaaBabbaBABBaABbAabBaBAbAbbABAbaAAbaAAaBaabaBbBBbBABAABBABaabBBbBBABAAaAAbbBbABBBbAabAbABbAAAbbAbABbbAbBAbabbbBBBBbAAabaabBABABaaAbaBBBBbbABbBbBABBaAbAaBBABBBabAABBBBBbBBabBaaBbaaBaBbaBbbAABbbAaaBBBbabaabBABABBBGabbBAbaBabAaAAabbbBaabBBbABBabBabbBbAbbAaBbAaAabBabBBbaBLaAbbAaaBaabAAabbABAAAAAbaAbaAabaAaAbaAbBbBAABbbbaBABbBBAbaaBBbaaAbbaAaaJAaAbAbbXBABAABABbbbBaAABaAAaaaabbbbBaABbaAbaAAbAaaBAaaAbbBaaBAabAbbAbBAbBaaaaaabBBaaabAaaAAaAaabBAaAaaAABbbaAAababBBBAABbAAbBBbAAaBAaABabaAAbABBbAAbBBbbBBBBAAaAbbBBAbaHbAaAbrBBAaBBbbabAbBaaaABAAAaABaBBbBbBBabBBBbBBBAbAaAaaBbAbABaabBbBBAAaaAAabAaaabbHAabABAbaBBBbBAaAabbbarbaBbbaAbaBAaBBAbbBaBbBABBAAbAbaABbABbBBAABaBBbBAAAbaaBAabBaBBaABAzBAbAAABBAAaabAaAaBAbABaABaBAbbAaBbbAbbbbbBaAABaaBbabbbBABbbAAAbBbBBBaBBbAaAbAaABaaAbbaaAabaABBaAabbbABBbAabBAabaabABBBBABbBBaabbAaababBAbabbBaaAAabBBBBbBBBbBAAAABaaBBBAAbAaAAAABaabbaaAAbAaABaaaBbaAAaABBAAbbBAaBBAAaBBBaaaAaBAaBAABbBBBAABAbBAababBAbABABbbbaBbABaaaBbbaaAABBBAbAbAAAabbBBAbBaBBaAAbBABaABVbAABbbAbBaBbbBBAAabbBbAabBbaabbbbaBaaBBBabbaBbaaABaAABaAaaBbbBAaABAbaBAAbBabBABAaAAabbaaaBaabbbbaAABaAbBabBAbBAaaABaaABBAaAbBbBBaAABBAaBBAbABAbAbBAAbBbBAAaABbAaaABaabAabAAbabAAaAaBAbBaBBBBBbaJaabBAaaaBBbPbaBAbabAaAABaAaBaaAABBAbbbAbbaBAbbaaAbaBaaAaabAbabAbAbbAAbbBbBBbbbaaaaaaabAbbBBaBbBaBAAAAbBAaAaaBBaBaBAbBBAaBAaABbbAAbAabBbABBBaaaBBabbAAbABBbBAbbbabBAaBAAAbAbABAaaAABbbAAABBbAabaBBBAaAaBBaBBaAAaaBaAbABbBbabbabaBBabbBBAbbaABBaBaaBbaabaAabBaBbAAAabbAABBAbaAaaBbAAabBAbAbbbBAbaBAaabBAabbAAaBBAaBBBBAabBBAAbbAaAAAaAbbaAbbBABbAbabbbAaAAABbbbBaaaBBAbbBABbbABAwBAbBbabABaaaaBaAABbABABAABaAabaaBbBBaaBbaBAABbAAaaABaBbAbBaaAAbAABbBabbABBaabAbbbAbBAbaBAABABbBABAbaAAbAbbBabABBAbbAaababbaBAAaBBABBaBABABAbaaBAbABbbBgaAAAbaaBaBbBAAABabaBbBAAbabaBBBbaABbAAaAaaaaAAbbBbaBaAbaBabaBBAbaaaAabbAAaaabeAbAbBaAAaaaAabbBAaBabABaaabbbAABbabbAaabaAAaabAabbaaabbBbAbBBABAbBbbABabAbABaaAAAbaBAAbabaEAAbBBABAabAbabAAaAaAaBaAaaBaaAAaaAbbbabaaAABabAaAAGaAbAABaBBabbaBAbAabAaAaBBAabkbBBBbAABabbABBaBbAbBbAaAAbbAaBAaBbABaababABBBabbaBBrBAbbaBBBBbBabBaABBabbZbbaBBBaBABaaAAbbAABbABBAABabAbbbbBBbBBbbAaaBaabABAaBBaBbAnABBBbbBBAabbbbbabBaaaBBBAbAabbABaBBAaAbBbbbAAABBbRAAAAABBabAAbaabbbAAbBAAaAbBabAAbAbaabAaAABbbaBAbaBbaaabBaBbBVAAAaABABaaabAAabbBAbAbABBbabaabaabBaaAbAbbbaaBbbbBAAabbbBAaabBBbAaABbAAaaBBbaAbaBAbABaaBbbBaBaaabbBbaaBbbBBbbAabBaaBabAbaBABAbAabbAAaABAbbBBbaBaBabBaabAAabaAbbBaBbBAABBABabBbbBABabAABabAaaabBbABbaAaAbaaBABbaAbBbbbbaBbabBaBAaAbaabAbbabaBBaaaaBaAaaaABBBaBBbaaBbAAbaabBbaBBbAbbAABBABAAhBaBAbAaaAaaabBbABAAABBAbaAbbBAabBBaaABababAbbbBBBAaAaBbAaaBabBAAAAaaBBBBaaABbBbbBaAbabAbaAbAaaAabbBaABAabbBAAAbBAaaBbAAbbbABaBBAaaBAABABaAaaBaaAABAbBBaABABaAbAABAbbAaAaAbAaBBAAbbbbaaabbaaBbbrXbaBbaBAABBBbabbbAaAabAaABBBbABAAABbbaBBAAbbBBbBAAABaabAbaAbababbabaBaAbAaaAAabaBBBBAaBAABaBAabAaaAaBABBBaBbbaaABBaAABBAaabBAbAAAbbAAAaabAaabbbBbBAbBBYbBBaGbaBaBabaAAaBBBABbaBaaaBajbBABBBAakbbBBaaaBbBaBAbbAAAbBaAaAAabBaaabbababaaabAaaBBAbbbabaBabbBBbBbAbBBAbaAbbAABbbBbaaBBbABBbbbbABAbbBBBABAIbAaBBaBaaBABAABArBAaAAAbbBAABabbAMBaaBBBBAAaBBAaabbbbbAabaGbaABBaaaBBBbaAbBBAaBaabAaabaabAaABAbBBAabaBBbBbBbBabbABaaABbabAbBAAbAabaaaaaaABabBbbbAbBBABaABAaBABABbaBbABBbAaBBAAabbBbaaabABAabaAaBBaAaaaAbbbabbbbBaABBAABbBbeBAbaabBbBABBBBBaABaABbbAbBAaabABBbBbbaaaabaaBaABbAAbbAaAaAabbbBbaBbbBAabABaBbBbBaBAaAAAAbABBAAbBAAAaABaAaAAbABBbAabbBAAQbabbABbAAbbBBBaaaaAaAbABAbaaBbAabBAAaAAaAbBaaBBBaaaBaabaabBaababBAABBaaABBbbAbAABBbBbbABBAaBbbABAAabbAcaAaBbBaBbBABABaAaAbBbaBAabBaaaAaaaAABABBaaaaaBABAaababbbabBbAAbbBaAdaAaAaaAaBAAabaaBBbBbaAaBbabaaBbBbBbBAbAaAaBABABABBbBAAAbbBBaaAbaAaAAaBabAlBBBAaBaBBaBobBBBAABaABBBABBaaBBaBaABBaBbaBBAbAaAbaBBBabababAbBbBaaBbBAAAaABBBAAAbBaBBbAbBBbaABABBBBaaAbabAbbbaBAbABBbAAbAbabBbabaAAAbBAjbBAbaBbBAbABAAbabAbaBAAaAaAbBBbaAbAAaBAbaaAAaaAbaBaaaBBBBbbaaBAaBBabBaabbbbbbaAAAbBBAaaaaaBBbaaAABBAaAbaBbabBBBaBBAbABbbBABabbABbabbBbbaabaBAaAabBAAbAaaabBaBabbbaaBBbaBaBBABAABBbbAABbaBbbAAaAaaaaaBbbAabBbaBaaabBAabBaBaFBAabBrabaBbaABbABbabAbaVaAAAabBbaBBAAAbbaBBaaABabaabAaaABBBbBAAaabaBbaBBBAaAaBAbAAbBBAAbAaBBababbaBABbbABBBABbbBAABAaBbbBBaabAbbBAaBbbabbaBBAAbabbaBBBbaBAaBaaBbbBBbbBbAabBBbbbaabAAAABaBbBBABbBaBBBAaaAabABBbbBbbabABbAbbbaaAaAAbaABaaAAaaAbbaBBAAbabBbababBaAaBBBbABbbBaaaBabaBaABbaBabBAAaZABAbbaAaaBbBAbbABbBBabbBABaBBababABaaaBABabaBAbaABBaAaBabbbABbabAAABAAA"))
